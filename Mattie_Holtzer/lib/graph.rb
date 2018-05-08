@@ -16,6 +16,10 @@ class Vertex
     @out_edges.push(edge)
   end
 
+  def delete_in(edge)
+    @in_edges.delete(self)
+  end
+
 end
 
 class Edge
@@ -31,6 +35,8 @@ class Edge
   end
 
   def destroy!
-
+    @to_vertex.delete_in(self)
+    @from_vertex = nil
+    @to_vertex = nil
   end
 end
