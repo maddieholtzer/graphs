@@ -8,19 +8,19 @@
 # Import any files you need to
 
 require_relative 'graph'
+require_relative 'topological_sort'
 
 def install_order(arr)
   vertices = []
-  min = arr[0][0]
-  max = arr[0][1]
   arr.each do |tup|
-    min = tup[0] if tup[0]<min
-    min = tup[1] if tup[1] <min
-    max = tup[0] if tup[0] > max
-    max = tup[1] if tup[1] > max
-    new_vert_in = Vertex.new(tup[0]) unless vertices.map{|vert| vert.value}.include?(tup[0])
-    new_vert_out = Vertex.new(tup[1]) unless vertices.map{|vert| vert.value}.include?(tup[1])
+    if vertices.length < [tup[0], tup[1]].max
+      [*vertices.length+1..[tup[0], tup[1]].max].each do |val|
+        vertices.push(Vertex.new(val))
+      end
+    end
+    Edge.new(vertices[tup[1]-1], vertices[tup[0]-1])
   end
-  [*min..max]
-
+  ret = topological_sort(vertices).map{|vert| vert.value}
+  print ret
+  ret
 end
