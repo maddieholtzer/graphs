@@ -21,6 +21,35 @@ def install_order(arr)
     Edge.new(vertices[tup[1]-1], vertices[tup[0]-1])
   end
   ret = topological_sort(vertices).map{|vert| vert.value}
-  print ret
   ret
 end
+
+def mod_install_order(arr)
+  vertices = []
+  hash = Hash.new(false)
+  arr.each do |tup|
+    unless !!hash[tup[0]]
+      vertices.push(Vertex.new(tup[0]))
+      hash[tup[0]] = vertices.length-1
+    end
+    unless !!hash[tup[1]]
+      vertices.push(Vertex.new(tup[1]))
+      hash[tup[1]] = vertices.length-1
+    end
+    Edge.new(vertices[hash[tup[1]]], vertices[hash[tup[0]]])
+  end
+  ret = topological_sort(vertices).map{|vert| vert.value}
+  ret
+end
+
+arr = [["mocha", "browserify"], ["bower", "browserify"], ["underscore", "cheerio"],
+       ["mocha", "underscore"], ["mocha", "bower"], ["passport", "mocha"],
+       ["hapi", "browserify"]]
+
+print mod_install_order(arr)
+
+arr = [["mocha", "browserify"], ["bower", "browserify"], ["underscore", "cheerio"],
+       ["mocha", "underscore"], ["mocha", "bower"], ["passport", "mocha"],
+       ["hapi", "browserify"], ["browserify", nil], ["cheerio", nil]]
+
+print mod_install_order(arr)
