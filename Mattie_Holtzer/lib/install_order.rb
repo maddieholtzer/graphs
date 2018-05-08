@@ -36,7 +36,7 @@ def mod_install_order(arr)
       vertices.push(Vertex.new(tup[1]))
       hash[tup[1]] = vertices.length-1
     end
-    Edge.new(vertices[hash[tup[1]]], vertices[hash[tup[0]]])
+    Edge.new(vertices[hash[tup[1]]], vertices[hash[tup[0]]]) unless tup[1].nil?
   end
   ret = topological_sort(vertices).map{|vert| vert.value}
   ret
