@@ -10,7 +10,7 @@
 require_relative 'graph'
 
 def install_order(arr)
-  hash = Hash.new { |h, k| h[k] = [] }
+  vertices = []
   min = arr[0][0]
   max = arr[0][1]
   arr.each do |tup|
@@ -18,7 +18,8 @@ def install_order(arr)
     min = tup[1] if tup[1] <min
     max = tup[0] if tup[0] > max
     max = tup[1] if tup[1] > max
-    hash[tup[0]].push(tup[1])
+    new_vert_in = Vertex.new(tup[0]) unless vertices.map{|vert| vert.value}.include?(tup[0])
+    new_vert_out = Vertex.new(tup[1]) unless vertices.map{|vert| vert.value}.include?(tup[1])
   end
   [*min..max]
 

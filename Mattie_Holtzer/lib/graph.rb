@@ -17,11 +17,7 @@ class Vertex
   end
 
   def delete_in(edge)
-    new_in = []
-    @in_edges.each do |edge2|
-      new_in.push(edge) unless edge2 == edge
-    end
-    @in_edges = new_in
+    @in_edges.delete(edge)
   end
 
   def delete_out(edge)
